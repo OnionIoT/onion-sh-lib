@@ -3,6 +3,32 @@
 ###################################
 ##### Library of SH Funcitons #####
 
+
+## logging functions ##
+bLogEnabled=0
+logFile="/tmp/$logName"
+
+# function to setup logging
+SetupLog () {
+	if [ $bLogEnabled == 1 ]; then
+		if [ -f $logFile ]; then
+			rm -rf $logFile
+		fi
+
+		touch $logFile
+	fi
+}
+
+# function to perform logging
+#	argument 1: message to be logged
+Log () {
+	if [ $bLogEnabled == 1 ]; then
+		echo "$1" >> $logFile
+	fi
+}
+
+
+## number conversion functions ##
 # convert hex to decimal
 #	argument 1 - hex value
 # 	returns hex via echo
@@ -46,3 +72,5 @@ FlipDutyPolarity () {
 	# return the new duty
 	echo "$ret"
 }
+
+
