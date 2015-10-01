@@ -73,4 +73,18 @@ FlipDutyPolarity () {
 	echo "$ret"
 }
 
+# performs hex to duty conversion for exp led
+# 	argument 1 - hex value (0x12 format)
+# 	returns duty via exho
+ExpLedHexToDuty () {
+	# hex to duty
+	duty=$( HexToDuty $1 )
+
+	# flip the duty polarity
+	dutyFlip=$( FlipDutyPolarity $duty )
+
+	# return the duty
+	echo "$dutyFlip"
+}
+
 
