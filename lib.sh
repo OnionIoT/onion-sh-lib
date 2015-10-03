@@ -6,7 +6,7 @@
 
 ## logging functions ##
 bLogEnabled=0
-logFile="/tmp/$logName"
+logFile=`mktemp`
 
 # function to setup logging
 SetupLog () {
