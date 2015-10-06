@@ -92,6 +92,41 @@ ExpLedHexToDuty () {
 }
 
 
+###############################
+## process related functions ##
+# function to get process info of any processes matching input
+# 	argument1: process name
+# 	argument2: optional string to ignore
+#	returns ps output via echo
+_getPs () {
+	# find any matching processes
+	local process=`ps | grep -v grep | grep $1`
+
+	#optional ignore
+	if [ "$2" != "" ]; then
+		process=`ps | grep -v grep | grep $1 | grep -v $2`
+	fi
+
+	echo "$process"
+}
+
+# function to get pids of any processes matching input
+#	argument1: process name
+# 	argument2: optional string to ignore
+#	returns a string of space-separated pids of matching processes via echo
+_getPids () {
+	# find any matching processes
+	local pids=`ps | grep -v grep | grep $1 | sed -e 's/^ \([0-9]*\).*$/\1/' | tr '\n' ' '`
+
+	#optional ignore
+	if [ "$2" != "" ]; then
+		pids=`ps | grep -v grep | grep $1 | grep -v $2 | sed -e 's/^ \([0-9]*\).*$/\1/' | tr '\n' ' '`
+	fi
+
+	echo "$pids"
+}
+
+
 ###########################
 ## rpcd script functions ##
 # function to parse json params object
