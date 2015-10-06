@@ -1,9 +1,13 @@
 #!/bin/sh
 
+# include the json sh library
+. /usr/share/libubox/jshn.sh
+
 ###################################
 ##### Library of SH Funcitons #####
 
 
+#######################
 ## logging functions ##
 bLogEnabled=0
 logFile=`mktemp`
@@ -27,7 +31,7 @@ Log () {
 	fi
 }
 
-
+#################################
 ## number conversion functions ##
 # convert hex to decimal
 #	argument 1 - hex value
@@ -88,3 +92,34 @@ ExpLedHexToDuty () {
 }
 
 
+###########################
+## rpcd script functions ##
+# function to parse json params object
+# 	returns a string via echo
+_ParseArgumentsObject () {
+	local retArgumentString=""
+
+	# select the arguments object
+	json_select params
+	
+	# read through all the arguments
+	json_get_keys keys
+
+	for key in $keys
+	do
+		# get the key value
+		json_get_var val "$key"
+		
+		# specific key modifications
+		if 	[ "$key" == "ssid" ] ||
+			[ "$key" == "password" ];
+		then
+			# add double quotes around ssid and password
+			val="\"$val\""
+		fi
+
+		retArgumentString="$retArgumentString-$key $val "
+	done
+
+	echo "$retArgumentString"
+}
