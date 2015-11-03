@@ -31,6 +31,15 @@ Log () {
 	fi
 }
 
+# function to delete empty log files
+CloseLog () {
+	if 	[ $bLogEnabled == 0 ] &&
+		[ -f $logFile ];
+	then
+		rm -rf $logFile
+	fi
+}
+
 #################################
 ## number conversion functions ##
 # convert hex to decimal
