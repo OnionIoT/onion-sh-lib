@@ -139,8 +139,15 @@ _getPids () {
 ###########################
 ## rpcd script functions ##
 # function to parse json params object
+#	argument1: if it is 'nodash', do not add a dash to the keys
 # 	returns a string via echo
 _ParseArgumentsObject () {
+	# check if dash required
+	local dash="-"
+	if [ "$1" == "nodash" ]; then
+		dash=""
+	fi
+
 	local retArgumentString=""
 
 	# select the arguments object
@@ -162,7 +169,7 @@ _ParseArgumentsObject () {
 			val="\"$val\""
 		fi
 
-		retArgumentString="$retArgumentString-$key $val "
+		retArgumentString="$retArgumentString$dash$key $val "
 	done
 
 	echo "$retArgumentString"
