@@ -169,6 +169,11 @@ _ParseArgumentsObject () {
 			val="\"$val\""
 		fi
 
+		# wrap value in double quotes if it contains spaces
+		if 	[ "$(echo $val | grep ' ')" != "" ]; then
+			val="\"$val\""
+		fi
+
 		retArgumentString="$retArgumentString$dash$key $val "
 	done
 
