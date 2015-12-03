@@ -170,7 +170,9 @@ _ParseArgumentsObject () {
 		fi
 
 		# wrap value in double quotes if it contains spaces
-		if 	[ "$(echo $val | grep ' ')" != "" ]; then
+		if 	[ "$(echo $val | grep ' ')" != "" ] ||
+			[ "$(echo $val | grep '\n')" != "" ]
+		then
 			val="\"$val\""
 		fi
 
