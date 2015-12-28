@@ -40,6 +40,39 @@ CloseLog () {
 	fi
 }
 
+#######################
+## web functions     ##
+
+# download from a url
+# 	argument 1 - the url
+# 	argument 2 - optional destination filename
+# returns: (via echo)
+#	0:	download successful
+#	1: 	download failed
+#	resp variable: contains output of wget command
+DownloadUrl () {
+	# handle the output destination
+	local OUTPUT=""
+	if [ "$2" != "" ]; then
+		OUTPUT="-O $2"
+	fi
+
+	# perform the wget
+	resp=$(wget -S $OUTPUT "$1" 2>&1)
+
+	# check if successful
+	local ret=$(echo "$resp" | grep 'HTTP/1.1 200 OK')
+
+	# return a value
+	if [ "$ret" != "" ]; then
+		echo "0"
+	else
+		echo "1"
+	fi
+}
+
+
+
 #################################
 ## number conversion functions ##
 # convert hex to decimal
