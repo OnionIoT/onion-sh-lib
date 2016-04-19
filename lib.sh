@@ -10,16 +10,16 @@
 #######################
 ## logging functions ##
 bLogEnabled=0
-logFile=`mktemp`
+logFile=""
 
 # function to setup logging
 SetupLog () {
 	if [ $bLogEnabled == 1 ]; then
-		if [ -f $logFile ]; then
-			rm -rf $logFile
+		if [ "$logFile" == "" ]; then
+			# create the log file
+			logFile=`mktemp`
+			touch $logFile
 		fi
-
-		touch $logFile
 	fi
 }
 
@@ -27,11 +27,13 @@ SetupLog () {
 #	argument 1: message to be logged
 Log () {
 	if [ $bLogEnabled == 1 ]; then
+		SetupLog
 		echo "$1" >> $logFile
 	fi
 }
 
 # function to delete empty log files
+# DEPRECATED: log files are no longer created if logging not enabled
 CloseLog () {
 	if 	[ $bLogEnabled == 0 ] &&
 		[ -f $logFile ];
