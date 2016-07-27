@@ -7,6 +7,25 @@
 ##### Library of SH Funcitons #####
 
 
+
+#######################
+## device functions  ##
+
+DEVICE_OMEGA="Onion Omega"
+DEVICE_OMEGA2="Onion Omega2"
+
+# find the device type
+# 	returns device model in text (via echo)
+GetDeviceType () {
+	jsonRet=$(ubus call system board)
+
+	# parse the response
+	json_load "$jsonRet"
+	json_get_var deviceType "model"
+
+	echo "$deviceType"
+}
+
 #######################
 ## logging functions ##
 bLogEnabled=0
@@ -41,6 +60,7 @@ CloseLog () {
 		rm -rf $logFile
 	fi
 }
+
 
 #######################
 ## web functions     ##
