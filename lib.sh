@@ -13,6 +13,7 @@
 
 DEVICE_OMEGA="Onion Omega"
 DEVICE_OMEGA2="Onion Omega2"
+DEVICE_OMEGA2P="Onion Omega2+"
 
 # find the device type
 # 	returns device model in text (via echo)
